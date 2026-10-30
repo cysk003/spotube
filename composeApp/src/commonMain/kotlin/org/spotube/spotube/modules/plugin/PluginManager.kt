@@ -149,8 +149,11 @@ class PluginManager(
     val state: StateFlow<PluginManagerStates> = database.settingsDataStore.data
         .map { p ->
             val json = p[DatabaseKeys.PLUGINS_STATE_KEY]
-            val defaultSelectedPlugins = mapOf(
-                PluginAbility.AUDIO to NEWPIPE_YOUTUBE_BUILT_IN_PLUGIN)
+            // Each category starts out with the built-in plugin that provides it.
+            val defaultSelectedPlugins = BUILT_IN_PLUGINS
+                .flatMap { plugin -> plugin.abilities.map { it to plugin } }
+                .distinctBy { it.first }
+                .toMap()
             if (json == null) {
                 PluginManagerStates.Data(
                     plugins = BUILT_IN_PLUGINS,
