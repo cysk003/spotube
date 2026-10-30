@@ -23,6 +23,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
+import android.os.Process
 import android.util.Log
 import androidx.annotation.OptIn
 import androidx.core.app.NotificationCompat
@@ -61,6 +62,8 @@ import spotube.composeapp.generated.resources.notification_playback_channel_name
 
 @OptIn(UnstableApi::class)
 class PlaybackService : MediaLibraryService(), KoinComponent {
+    private var taskRemoved = false
+
 
     private val audioPlayer = inject<AudioPlayerInterface>().value as AudioPlayer
     private val audioPlayerQueue: AudioPlayerQueue by inject()
@@ -161,9 +164,13 @@ class PlaybackService : MediaLibraryService(), KoinComponent {
         removeSession(librarySession)
         librarySession.release()
         super.onDestroy()
+        // Swiping the app out of recents should fully close it: Android otherwise keeps this
+        // process cached with the proxy server, MQTT client and every singleton still alive.
+        if (taskRemoved) Process.killProcess(Process.myPid())
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
+        taskRemoved = true
         pauseAllPlayersAndStopSelf()
     }
 

@@ -82,10 +82,16 @@ class NewPipeDownloader(private val cookieJar: PersistentCookieJar) : Downloader
     companion object {
         private var instance: NewPipeDownloader? = null
 
+            /**
+         * Safe to call on every Activity creation: the process (and so this singleton) outlives
+         * the Activity, and a second [PersistentCookieJar] would open a second DataStore on the
+         * same cookies file, which DataStore rejects.
+         */
+        @Synchronized
         fun init(paths: Paths) {
+            if (instance != null) return
             val cookieJar = PersistentCookieJar(paths)
-            instance = NewPipeDownloader(cookieJar)
-            NewPipe.init(instance)
+            instance = NewPipeDownloader(cookieJar).also { NewPipe.init(it) }
         }
     }
 }
