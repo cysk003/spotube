@@ -382,7 +382,7 @@
     <string name="welcome_guide_title">Spotube 사용 방법</string>
     <string name="welcome_guide_subtitle">간단한 네 단계면 바로 감상할 수 있어요.</string>
     <string name="welcome_guide_signin_title">로그인</string>
-    <string name="welcome_guide_signin_desc">Spotify 계정을 연결하거나 원하는 카탈로그 플러그인을 선택하세요.</string>
+    <string name="welcome_guide_signin_desc">계정을 연결하거나 원하는 카탈로그 플러그인을 선택하세요.</string>
     <string name="welcome_guide_search_title">검색하고 재생하기</string>
     <string name="welcome_guide_search_desc">노래, 앨범, 아티스트를 찾은 다음 재생을 누르세요.</string>
     <string name="welcome_guide_offline_title">오프라인으로 감상하기</string>

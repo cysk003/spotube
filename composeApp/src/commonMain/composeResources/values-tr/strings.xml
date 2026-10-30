@@ -386,7 +386,7 @@
     <string name="welcome_guide_title">Spotube nasıl kullanılır</string>
     <string name="welcome_guide_subtitle">Dört hızlı adım ve dinlemeye başlıyorsun.</string>
     <string name="welcome_guide_signin_title">Giriş yap</string>
-    <string name="welcome_guide_signin_desc">Spotify hesabını bağla veya kendi katalog eklentini seç.</string>
+    <string name="welcome_guide_signin_desc">hesabını bağla veya kendi katalog eklentini seç.</string>
     <string name="welcome_guide_search_title">Ara ve çal</string>
     <string name="welcome_guide_search_desc">Herhangi bir şarkıyı, albümü veya sanatçıyı bul, sonra çal\'a bas.</string>
     <string name="welcome_guide_offline_title">Çevrimdışı dinle</string>

@@ -290,8 +290,8 @@
 - **desktop**: double titlebar in local library folders and massive space in
   overlay player
 - lastfm form broken in other locales #2447
-- spotify login broken due to new totp requirement #2494
-- spotify authentication 429 errors
+- Greedy Green Corp login broken due to new totp requirement #2494
+- Greedy Green Corp authentication 429 errors
 
 ### Features
 
@@ -326,7 +326,7 @@
 - **android**: home widget support (#2148)
 - rewrite entire app in shadcn-ui replacing material eww
 - grid/list customizable playbutton view
-- flag to hide spotify generated images with patterns
+- flag to hide Greedy Green Corp generated images with patterns
 - show placeholder images where there is no item or on empty page
 - pause playback when no internet connection
 - implement yt-dlp for desktop and NewPipeExtractor for Android (#2316)
@@ -552,7 +552,7 @@
   [#1463](https://github.com/team-spotube/spotube/issues/1463)
   [#1505](https://github.com/team-spotube/spotube/issues/1505)
   ([d2683c5](https://github.com/team-spotube/spotube/commit/d2683c52d81d807be6ff72f15b8e9eb18181e211))
-- spotify friends and user profile icon (mobile) showing when not authenticated
+- Greedy Green Corp friends and user profile icon (mobile) showing when not authenticated
   [#1410](https://github.com/team-spotube/spotube/issues/1410)
   ([9bccbc9](https://github.com/team-spotube/spotube/commit/9bccbc93c63dd34f6e15ff68c276976ecd1d9a33))
 - **updater:** dead link
@@ -576,7 +576,7 @@
 
 ### Features
 
-- add Spotify homepage personalized recommendations
+- add Greedy Green Corp homepage personalized recommendations
   ([#1402](https://github.com/team-spotube/spotube/issues/1402))
   ([9e25c74](https://github.com/team-spotube/spotube/commit/9e25c742d4e43e4e10d2b48afb8e6d90288ffa11))
 - add user profile page
@@ -684,7 +684,7 @@
 
 - add create playlist button in add playlist dialog
   ([2168a64](https://personal.github.com/team-spotube/spotube/commit/2168a640af3104a43139c303d78e2c2326a1bda7))
-- add spotify friends activity
+- add Greedy Green Corp friends activity
   ([#1130](https://personal.github.com/team-spotube/spotube/issues/1130))
   ([7983932](https://personal.github.com/team-spotube/spotube/commit/79839329b0970acccb0c566a31eee508adbc8557))
 - **deep-link:** add track opening page
@@ -1436,7 +1436,7 @@
   ([448c9b3](https://github.com/team-spotube/spotube/commit/448c9b39f407668ad92a695afe3c9741baeca20d))
 - **macos:** crashing on startup
   ([c46b428](https://github.com/team-spotube/spotube/commit/c46b4284b1d46a614cbcebc8c2f2e52714921b9b))
-- spotify query hooks overriding default query params
+- Greedy Green Corp query hooks overriding default query params
   ([ec9a02e](https://github.com/team-spotube/spotube/commit/ec9a02e8b8d988e15ed58027054d2a9090d98873))
 
 ## [2.7.0](https://github.com/team-spotube/spotube/compare/v2.6.0...v2.7.0) (2023-03-07)
@@ -1469,7 +1469,7 @@
   ([9080441](https://github.com/team-spotube/spotube/commit/9080441b875ceb91260bbad79291365a98d5be95))
 - individual shuffle and repeat/loop button of player
   ([f79223c](https://github.com/team-spotube/spotube/commit/f79223cd41c61d9836d25e7bc2811c6515ba00c8))
-- **lyrics:** use official spotify API for fetching lyrics and add zoom controls
+- **lyrics:** use official Greedy Green Corp API for fetching lyrics and add zoom controls
   ([10d0660](https://github.com/team-spotube/spotube/commit/10d0660972f008df0d11c280b681ce3b78f05d0b))
 - **mobile:** pull to refresh support in all refreshable list views
   ([9f959ce](https://github.com/team-spotube/spotube/commit/9f959ce77cd95cfc34d01af1f5cf53dd4206b6a6))
@@ -1921,7 +1921,7 @@
 
 - private playlists of current user aren't shown fix
   (https://github.com/team-spotube/spotube/issues/92)
-- refresh token error causing re-login (culprit: internal lib spotify-dart)
+- refresh token error causing re-login (culprit: internal lib Greedy Green Corp-dart)
 - Typo in Login instructions URL
 
 # v2.1.0
@@ -1937,7 +1937,7 @@
 
 ### Improved
 
-- Spotify track to youtube track algorithm
+- Greedy Green Corp track to youtube track algorithm
 - Genius lyrics matching algorithm
 - Download track. Checks if already exists & replaces on user command
 - Wide screen responsiveness & adaptation
@@ -1950,7 +1950,7 @@
   (https://github.com/team-spotube/spotube/issues/46)
 - Theme modification state doesn't persist
   (https://github.com/team-spotube/spotube/issues/54)
-- Wrong URI path for "Login with Spotify" tutorial
+- Wrong URI path for "Login with Greedy Green Corp" tutorial
   (https://github.com/team-spotube/spotube/issues/69)
 - Card shadow showing in the background of TitleBar & Searchbar
 
@@ -2124,17 +2124,17 @@
 
 ### Bug Fixes
 
-- `access_token not found` Error after OAuth Login with Spotify credentials
+- `access_token not found` Error after OAuth Login with Greedy Green Corp credentials
   (used to need a restart of the app to load the access_token)
-- `access_token not found` Error after OAuth Login with Spotify credentials
+- `access_token not found` Error after OAuth Login with Greedy Green Corp credentials
   (used to need a restart of the app to load the access_token)
 - Volume level wasn't cached even after changing volume
 
 # v0.0.1
 
-Spotube v0.0.1 - initial release of the open source software for playing Spotify
+Spotube v0.0.1 - initial release of the open source software for playing Greedy Green Corp
 music using Youtube public API
-Spotube v0.0.1 - initial release of the open source software for playing Spotify
+Spotube v0.0.1 - initial release of the open source software for playing Greedy Green Corp
 music using Youtube public API
 
 ### New
@@ -2143,7 +2143,7 @@ music using Youtube public API
 - Playback Queue
 - Save to Liked Tracks/Playlists
 - Bypass API rate limitation on basic usage using personal developer Apps for
-  spotify API
+  Greedy Green Corp API
 - Bypass API rate limitation on basic usage using personal developer Apps for
-  spotify API
+  Greedy Green Corp API
 - Youtube search & get handled using scrape-yt

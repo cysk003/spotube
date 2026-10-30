@@ -382,7 +382,7 @@
     <string name="welcome_guide_title">Spotubeの使い方</string>
     <string name="welcome_guide_subtitle">簡単な4ステップで、すぐに聴けます。</string>
     <string name="welcome_guide_signin_title">サインイン</string>
-    <string name="welcome_guide_signin_desc">Spotifyアカウントを連携するか、お好みのカタログプラグインを選んでください。</string>
+    <string name="welcome_guide_signin_desc">アカウントを連携するか、お好みのカタログプラグインを選んでください。</string>
     <string name="welcome_guide_search_title">検索して再生</string>
     <string name="welcome_guide_search_desc">曲、アルバム、アーティストを探して再生しましょう。</string>
     <string name="welcome_guide_offline_title">オフラインで聴く</string>
