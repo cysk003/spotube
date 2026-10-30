@@ -30,6 +30,9 @@ import org.spotube.plugin_interfaces.plugin_apis.metadata.search.MetadataSupport
 import org.spotube.plugin_interfaces.plugin_apis.metadata.track.MetadataTrack
 import org.spotube.plugin_interfaces.plugin_apis.metadata.user.MetadataUser
 import org.spotube.spotube.core.db.Database
+import org.spotube.spotube.core.di.injectLogger
+import org.koin.core.component.KoinComponent
+import org.spotube.spotube.modules.library.LibraryRepository
 import org.spotube.spotube.modules.saved_tracks.SavedTracksRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
@@ -81,7 +84,8 @@ data class SearchScreenState(
 class SearchScreenViewModel(
     private val repository: SearchRepository,
     private val savedTracksRepository: SavedTracksRepository,
-    private val database: Database) : ViewModel() {
+    private val libraryRepository: LibraryRepository,
+    private val database: Database) : ViewModel(), KoinComponent {
     companion object {
         private val RECENT_SEARCHES_KEY = stringPreferencesKey("recent_searches")
         private val SEARCH_TYPES_ORDER = listOf(
@@ -97,10 +101,15 @@ class SearchScreenViewModel(
         private const val ALL_ROW_PAGE_SIZE = 12
     }
 
+    private val logger by injectLogger<SearchScreenViewModel>()
+
     private val json = Json { ignoreUnknownKeys = true }
 
     private val _state = MutableStateFlow(SearchScreenState())
     val state: StateFlow<SearchScreenState> = _state.asStateFlow()
+
+    private val _currentUserId = MutableStateFlow<String?>(null)
+    val currentUserId: StateFlow<String?> = _currentUserId.asStateFlow()
 
     private var queryJob: Job? = null
 
@@ -113,6 +122,15 @@ class SearchScreenViewModel(
         }
 
         loadSupportedSearchTypes()
+        viewModelScope.launch { loadCurrentUser() }
+    }
+
+    private suspend fun loadCurrentUser() {
+        runCatching {
+            _currentUserId.value = libraryRepository.currentUser()?.id
+        }.onFailure { e ->
+            logger.e(e) { "Failed to load current user" }
+        }
     }
 
     fun onQueryChange(query: String) {

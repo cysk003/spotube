@@ -30,7 +30,7 @@ import platform.WebKit.WKWebViewConfiguration
  * Mobile Safari's exact User-Agent on this device.
  *
  * WKWebView's default UA ends in `Mobile/15E148` without Safari's `Version/x … Safari/604.1`,
- * which sites like accounts.spotify.com treat as an embedded browser ("Oops, something went
+ * which sites like accounts.greedygreencorp.com treat as an embedded browser ("Oops, something went
  * wrong"). Hand-building the string isn't safe either: Safari freezes the OS part (iOS 26
  * reports `iPhone OS 18_7`). So WebKit builds it: a probe WKWebView gets Safari's application
  * name and reports `navigator.userAgent`, which is cached for every web view.

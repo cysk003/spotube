@@ -390,7 +390,7 @@
     <string name="welcome_guide_title">Come usare Spotube</string>
     <string name="welcome_guide_subtitle">Quattro rapidi passaggi e sei pronto ad ascoltare.</string>
     <string name="welcome_guide_signin_title">Accedi</string>
-    <string name="welcome_guide_signin_desc">Collega il tuo account Spotify o scegli il tuo plugin di catalogo.</string>
+    <string name="welcome_guide_signin_desc">Collega il tuo account o scegli il tuo plugin di catalogo.</string>
     <string name="welcome_guide_search_title">Cerca e riproduci</string>
     <string name="welcome_guide_search_desc">Trova qualsiasi brano, album o artista, poi premi play.</string>
     <string name="welcome_guide_offline_title">Ascolta offline</string>

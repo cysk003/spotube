@@ -32,17 +32,23 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.Spring
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.dp
@@ -299,6 +305,15 @@ internal fun CompactPlayerOverlay(
     onAlternativeSource: () -> Unit,
     onExpandLyrics: () -> Unit,
     floatingPlayer: @Composable (Modifier) -> Unit = { AppFloatingPlayer(modifier = it) },
+    expandedPlayer: @Composable (modifier: Modifier, onCollapse: () -> Unit) -> Unit = { modifier, onCollapse ->
+        AppExpandedPlayer(
+            modifier = modifier,
+            onCollapse = onCollapse,
+            onQueue = onQueue,
+            onAlternativeSource = onAlternativeSource,
+            onExpandLyrics = onExpandLyrics
+        )
+    },
     bottomBar: @Composable (Modifier) -> Unit = {
         AppBottombar(navigator = navigator, navigationState = navigationState, modifier = it)
     },
@@ -325,16 +340,39 @@ internal fun CompactPlayerOverlay(
     val sheetState = key(peekHeight) {
         rememberBottomSheetState(
             initialDetent = partialDetent,
-            detents = listOf(partialDetent, SheetDetent.FullyExpanded)
+            detents = listOf(partialDetent, SheetDetent.FullyExpanded),
+            // A spring carries the fling velocity into the settle, so releasing mid-drag
+            // glides to the nearest detent instead of stalling and then easing like a tween.
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioNoBouncy,
+                stiffness = Spring.StiffnessMediumLow)
         )
     }
 
-    val progress = if (!sheetState.offset.isFinite() ||
-        (sheetState.isIdle && sheetState.currentDetent == partialDetent)
-    ) 0f else runCatching {
-        sheetState.progress(partialDetent, SheetDetent.FullyExpanded)
-    }.getOrDefault(0f).takeIf { it.isFinite() } ?: 0f
-    val uiState = viewModel.compactSheetUiState(progress.coerceIn(0f, 1f))
+    // Read only inside draw/derived scopes: the sheet offset changes every drag frame, and
+    // reading it in composition would recompose the whole player on each one.
+    val progress by remember(sheetState, partialDetent) {
+        derivedStateOf {
+            val value = if (!sheetState.offset.isFinite() ||
+                (sheetState.isIdle && sheetState.currentDetent == partialDetent)
+            ) 0f else runCatching {
+                sheetState.progress(partialDetent, SheetDetent.FullyExpanded)
+            }.getOrDefault(0f).takeIf { it.isFinite() } ?: 0f
+            value.coerceIn(0f, 1f)
+        }
+    }
+    // Keyed on the sheet state: it is recreated when the peek height changes, and a derived
+    // value left reading the previous sheet's progress would never update again.
+    val expandedPlayerVisible by remember(sheetState) {
+        derivedStateOf { viewModel.compactSheetUiState(progress).showExpandedPlayer }
+    }
+    val floatingPlayerVisible by remember(sheetState) {
+        derivedStateOf { viewModel.compactSheetUiState(progress).floatingPlayerAlpha > 0.01f }
+    }
+    // Once shown, keep the expanded player composed: composing it (view models, lyrics, cover
+    // art) on the first drag frame of every gesture is the hitch the user feels as lag.
+    var expandedPlayerComposed by remember { mutableStateOf(false) }
+    if (expandedPlayerVisible) expandedPlayerComposed = true
 
     Box(modifier = Modifier.fillMaxSize()) {
         content()
@@ -345,44 +383,52 @@ internal fun CompactPlayerOverlay(
         ) {
             Sheet(modifier = Modifier.fillMaxSize()) {
                 Box(modifier = Modifier.fillMaxSize()) {
-                    if (uiState.showExpandedPlayer) {
-                        AppExpandedPlayer(
-                            modifier = Modifier
+                    if (expandedPlayerComposed) {
+                        expandedPlayer(
+                            Modifier
                                 .fillMaxSize()
-                                .graphicsLayer { alpha = uiState.expandedPlayerAlpha },
-                            onCollapse = {
-                                scope.launch { sheetState.animateTo(partialDetent) }
-                            },
-                            onQueue = onQueue,
-                            onAlternativeSource = onAlternativeSource,
-                            onExpandLyrics = onExpandLyrics
+                                .graphicsLayer {
+                                    alpha = viewModel.compactSheetUiState(progress).expandedPlayerAlpha
+                                },
+                            { scope.launch { sheetState.animateTo(partialDetent) } }
                         )
                     }
 
-                    if (uiState.floatingPlayerAlpha > 0.01f) {
-                        Column(modifier = Modifier.fillMaxWidth()) {
-                            floatingPlayer(
-                                Modifier
-                                    .graphicsLayer {
-                                        alpha = uiState.floatingPlayerAlpha
-                                    })
-                        }
+                    // Always composed: building it (view model, cover art, player state) only once
+                    // progress drops below the fade-out point stalls the collapse mid-drag.
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        floatingPlayer(
+                            Modifier
+                                .zeroSizeUnless(floatingPlayerVisible)
+                                .graphicsLayer {
+                                    alpha = viewModel.floatingPlayerAlpha(progress)
+                                })
                     }
                 }
             }
         }
 
-        if (uiState.floatingPlayerAlpha > 0.01f) {
-            bottomBar(
-                Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .onSizeChanged { size ->
-                        viewModel.onBottomBarMeasured(with(density) { size.height.toDp() })
-                    }
-                    .graphicsLayer {
-                        alpha = uiState.floatingPlayerAlpha
-                    })
-        }
+        bottomBar(
+            Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .zeroSizeUnless(floatingPlayerVisible)
+                .onSizeChanged { size ->
+                    viewModel.onBottomBarMeasured(with(density) { size.height.toDp() })
+                }
+                .graphicsLayer {
+                    alpha = viewModel.floatingPlayerAlpha(progress)
+                })
     }
 }
+
+/**
+ * Keeps the content composed but takes it out of layout, drawing and hit testing while it is
+ * fully faded out, so it neither steals touches from what is above it nor costs a re-composition
+ * when it comes back.
+ */
+private fun Modifier.zeroSizeUnless(visible: Boolean): Modifier =
+    if (visible) this else layout { measurable, constraints ->
+        measurable.measure(constraints)
+        layout(0, 0) {}
+    }

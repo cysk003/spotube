@@ -382,7 +382,7 @@
     <string name="welcome_guide_title">Cara menggunakan Spotube</string>
     <string name="welcome_guide_subtitle">Empat langkah singkat dan kamu siap mendengarkan.</string>
     <string name="welcome_guide_signin_title">Masuk</string>
-    <string name="welcome_guide_signin_desc">Hubungkan akun Spotify-mu, atau pilih plugin katalogmu sendiri.</string>
+    <string name="welcome_guide_signin_desc">Hubungkan akunmu, atau pilih plugin katalogmu sendiri.</string>
     <string name="welcome_guide_search_title">Cari dan putar</string>
     <string name="welcome_guide_search_desc">Temukan lagu, album, atau artis apa pun, lalu tekan putar.</string>
     <string name="welcome_guide_offline_title">Dengarkan offline</string>

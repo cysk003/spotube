@@ -382,7 +382,7 @@
     <string name="welcome_guide_title">如何使用 Spotube</string>
     <string name="welcome_guide_subtitle">只要四個簡單步驟，就能開始聆聽。</string>
     <string name="welcome_guide_signin_title">登入</string>
-    <string name="welcome_guide_signin_desc">連結你的 Spotify 帳戶，或選擇你自己的目錄外掛程式。</string>
+    <string name="welcome_guide_signin_desc">連結你的帳戶，或選擇你自己的目錄外掛程式。</string>
     <string name="welcome_guide_search_title">搜尋並播放</string>
     <string name="welcome_guide_search_desc">找到任何歌曲、專輯或藝人，然後按下播放。</string>
     <string name="welcome_guide_offline_title">離線聆聽</string>

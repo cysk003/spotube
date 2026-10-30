@@ -402,7 +402,7 @@
     <string name="welcome_guide_title">كيفية استخدام Spotube</string>
     <string name="welcome_guide_subtitle">أربع خطوات سريعة وتبدأ الاستماع.</string>
     <string name="welcome_guide_signin_title">تسجيل الدخول</string>
-    <string name="welcome_guide_signin_desc">اربط حسابك على Spotify، أو اختر إضافة الكتالوج الخاصة بك.</string>
+    <string name="welcome_guide_signin_desc">اربط حسابك، أو اختر إضافة الكتالوج الخاصة بك.</string>
     <string name="welcome_guide_search_title">ابحث وشغّل</string>
     <string name="welcome_guide_search_desc">اعثر على أي أغنية أو ألبوم أو فنان، ثم اضغط تشغيل.</string>
     <string name="welcome_guide_offline_title">استمع بلا إنترنت</string>

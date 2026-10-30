@@ -394,7 +394,7 @@
     <string name="welcome_guide_title">Як користуватися Spotube</string>
     <string name="welcome_guide_subtitle">Чотири прості кроки — і музика вже грає.</string>
     <string name="welcome_guide_signin_title">Вхід</string>
-    <string name="welcome_guide_signin_desc">Підключіть акаунт Spotify або виберіть власний плагін каталогу.</string>
+    <string name="welcome_guide_signin_desc">Підключіть акаунт або виберіть власний плагін каталогу.</string>
     <string name="welcome_guide_search_title">Шукайте й слухайте</string>
     <string name="welcome_guide_search_desc">Знайдіть будь-який трек, альбом чи виконавця й натисніть «Відтворити».</string>
     <string name="welcome_guide_offline_title">Слухайте офлайн</string>

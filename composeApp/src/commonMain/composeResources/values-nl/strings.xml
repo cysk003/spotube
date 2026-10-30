@@ -386,7 +386,7 @@
     <string name="welcome_guide_title">Zo gebruik je Spotube</string>
     <string name="welcome_guide_subtitle">Vier snelle stappen en je luistert al.</string>
     <string name="welcome_guide_signin_title">Inloggen</string>
-    <string name="welcome_guide_signin_desc">Koppel je Spotify-account of kies je eigen catalogusplug-in.</string>
+    <string name="welcome_guide_signin_desc">Koppel je account of kies je eigen catalogusplug-in.</string>
     <string name="welcome_guide_search_title">Zoeken en afspelen</string>
     <string name="welcome_guide_search_desc">Vind elk nummer, album of elke artiest en druk op afspelen.</string>
     <string name="welcome_guide_offline_title">Offline luisteren</string>

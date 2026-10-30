@@ -386,7 +386,7 @@
     <string name="welcome_guide_title">So nutzt du Spotube</string>
     <string name="welcome_guide_subtitle">Vier schnelle Schritte und du hörst Musik.</string>
     <string name="welcome_guide_signin_title">Anmelden</string>
-    <string name="welcome_guide_signin_desc">Verbinde dein Spotify-Konto oder wähle ein eigenes Katalog-Plugin.</string>
+    <string name="welcome_guide_signin_desc">Verbinde dein Konto oder wähle ein eigenes Katalog-Plugin.</string>
     <string name="welcome_guide_search_title">Suchen und abspielen</string>
     <string name="welcome_guide_search_desc">Finde einen Song, ein Album oder einen Künstler und tippe auf Abspielen.</string>
     <string name="welcome_guide_offline_title">Offline hören</string>

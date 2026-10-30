@@ -18,15 +18,6 @@
 package org.spotube.spotube.modules.search
 
 
-import org.spotube.millennium.composables.MillenniumMarqueeProgress
-import org.spotube.millennium.composables.MillenniumIcon
-import org.spotube.millennium.composables.MillenniumButton
-import org.spotube.millennium.composables.MillenniumButtonStyle
-import org.spotube.millennium.composables.MillenniumListTile
-import org.spotube.millennium.composables.MillenniumAutocomplete
-import org.spotube.millennium.composables.MillenniumText
-import org.spotube.millennium.composables.MillenniumTextField
-import org.spotube.millennium.theme.MillenniumTheme
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -60,9 +51,6 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.input.rememberTextFieldState
-
-import org.spotube.spotube.core.ui.theming.AppTheme
-import com.composeunstyled.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -77,17 +65,32 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.composeunstyled.Text
 import com.composeunstyled.currentWindowWidthBreakpoint
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
+import org.spotube.millennium.adaptive.WindowBreakpoints
+import org.spotube.millennium.composables.MillenniumAutocomplete
+import org.spotube.millennium.composables.MillenniumButton
+import org.spotube.millennium.composables.MillenniumButtonStyle
+import org.spotube.millennium.composables.MillenniumIcon
+import org.spotube.millennium.composables.MillenniumListTile
+import org.spotube.millennium.composables.MillenniumMarqueeProgress
+import org.spotube.millennium.composables.MillenniumText
+import org.spotube.millennium.theme.MillenniumTheme
 import org.spotube.plugin_interfaces.plugin_apis.metadata.album.MetadataAlbum
 import org.spotube.plugin_interfaces.plugin_apis.metadata.artist.MetadataArtist
 import org.spotube.plugin_interfaces.plugin_apis.metadata.playlist.MetadataPlaylist
 import org.spotube.plugin_interfaces.plugin_apis.metadata.search.MetadataSupportedSearchType
 import org.spotube.plugin_interfaces.plugin_apis.metadata.track.MetadataTrack
 import org.spotube.plugin_interfaces.plugin_apis.metadata.user.MetadataUser
-import org.spotube.spotube.Platform
 import org.spotube.spotube.core.audioplayer.AudioPlayerQueue
 import org.spotube.spotube.core.audioplayer.QueueEntry
 import org.spotube.spotube.core.jam.JamRole
@@ -108,6 +111,7 @@ import org.spotube.spotube.core.ui.component.UserCard
 import org.spotube.spotube.core.ui.component.cards.PlayableCard
 import org.spotube.spotube.core.ui.component.dragScrollable
 import org.spotube.spotube.core.ui.misc.SkeletonTree
+import org.spotube.spotube.core.ui.theming.AppTheme
 import org.spotube.spotube.getPlatform
 import org.spotube.spotube.isDesktop
 import org.spotube.spotube.modules.blacklist.BlacklistRepository
@@ -119,46 +123,38 @@ import org.spotube.spotube.resources.iconsax.Iconsax
 import org.spotube.spotube.resources.iconsax.IconsaxSearchBroken
 import org.spotube.spotube.resources.iconsax.IconsaxTrash
 import org.spotube.spotube.resources.iconsax.InconsaxClock
-import org.jetbrains.compose.resources.stringResource
 import spotube.composeapp.generated.resources.Res
-import spotube.composeapp.generated.resources.search_clear_history
-import spotube.composeapp.generated.resources.search_placeholder
 import spotube.composeapp.generated.resources.library_tab_albums
 import spotube.composeapp.generated.resources.library_tab_artists
 import spotube.composeapp.generated.resources.library_tab_playlists
-import spotube.composeapp.generated.resources.search_results_title
-import spotube.composeapp.generated.resources.search_no_search_types
-import spotube.composeapp.generated.resources.search_start_typing
+import spotube.composeapp.generated.resources.search_clear_history
+import spotube.composeapp.generated.resources.search_loading_albums
+import spotube.composeapp.generated.resources.search_loading_artists
+import spotube.composeapp.generated.resources.search_loading_playlists
+import spotube.composeapp.generated.resources.search_loading_tracks
+import spotube.composeapp.generated.resources.search_loading_users
+import spotube.composeapp.generated.resources.search_no_albums
+import spotube.composeapp.generated.resources.search_no_artists
+import spotube.composeapp.generated.resources.search_no_playlists
 import spotube.composeapp.generated.resources.search_no_results
+import spotube.composeapp.generated.resources.search_no_search_types
+import spotube.composeapp.generated.resources.search_no_users
+import spotube.composeapp.generated.resources.search_placeholder
+import spotube.composeapp.generated.resources.search_results_title
+import spotube.composeapp.generated.resources.search_searching
 import spotube.composeapp.generated.resources.search_section_tracks
 import spotube.composeapp.generated.resources.search_section_users
-import spotube.composeapp.generated.resources.search_start_typing_tracks
-import spotube.composeapp.generated.resources.search_loading_tracks
-import spotube.composeapp.generated.resources.search_no_albums
-import spotube.composeapp.generated.resources.search_loading_albums
-import spotube.composeapp.generated.resources.search_no_artists
-import spotube.composeapp.generated.resources.search_loading_artists
-import spotube.composeapp.generated.resources.search_no_playlists
-import spotube.composeapp.generated.resources.search_loading_playlists
-import spotube.composeapp.generated.resources.search_no_users
-import spotube.composeapp.generated.resources.search_loading_users
 import spotube.composeapp.generated.resources.search_see_all
-import spotube.composeapp.generated.resources.search_searching
-import spotube.composeapp.generated.resources.search_warm_crates
+import spotube.composeapp.generated.resources.search_start_typing
+import spotube.composeapp.generated.resources.search_start_typing_tracks
+import spotube.composeapp.generated.resources.search_tab_all
+import spotube.composeapp.generated.resources.search_warm_antennas
 import spotube.composeapp.generated.resources.search_warm_cosmos
+import spotube.composeapp.generated.resources.search_warm_crates
+import spotube.composeapp.generated.resources.search_warm_music_gods
+import spotube.composeapp.generated.resources.search_warm_records
 import spotube.composeapp.generated.resources.search_warm_speakers
 import spotube.composeapp.generated.resources.search_warm_vinyl
-import spotube.composeapp.generated.resources.search_warm_music_gods
-import spotube.composeapp.generated.resources.search_warm_antennas
-import spotube.composeapp.generated.resources.search_warm_records
-import spotube.composeapp.generated.resources.search_tab_all
-import org.jetbrains.compose.resources.StringResource
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import org.koin.compose.koinInject
-import org.koin.compose.viewmodel.koinViewModel
-import org.spotube.millennium.adaptive.WindowBreakpoints
 
 private val GridMinCellSize = 180.dp
 
@@ -183,7 +179,7 @@ fun SearchScreen(viewModel: SearchScreenViewModel = koinViewModel()) {
     val savedTrackIds by viewModel.savedTrackIds.collectAsStateWithLifecycle()
     var showAddToPlaylistPicker by remember { mutableStateOf(false) }
     var tracksToAddToPlaylist by remember { mutableStateOf<List<MetadataTrack>>(emptyList()) }
-    var currentUserId by remember { mutableStateOf<String?>(null) }
+    val currentUserId by viewModel.currentUserId.collectAsStateWithLifecycle()
 
     val blacklistedTracks by blacklistRepository.blacklistedTracks.collectAsStateWithLifecycle(
         emptyList()
@@ -205,10 +201,6 @@ fun SearchScreen(viewModel: SearchScreenViewModel = koinViewModel()) {
         scope.launch {
             blacklistRepository.toggleTrack(track)
         }
-    }
-
-    LaunchedEffect(Unit) {
-        currentUserId = libraryRepository.currentUser()?.id
     }
 
     val focusManager = LocalFocusManager.current

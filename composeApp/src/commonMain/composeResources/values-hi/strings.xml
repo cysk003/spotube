@@ -385,7 +385,7 @@
     <string name="welcome_guide_title">Spotube कैसे इस्तेमाल करें</string>
     <string name="welcome_guide_subtitle">चार आसान स्टेप और आप सुनना शुरू कर सकते हैं।</string>
     <string name="welcome_guide_signin_title">साइन इन करें</string>
-    <string name="welcome_guide_signin_desc">अपना Spotify अकाउंट कनेक्ट करें, या अपना कैटलॉग प्लगइन चुनें।</string>
+    <string name="welcome_guide_signin_desc">अपना अकाउंट कनेक्ट करें, या अपना कैटलॉग प्लगइन चुनें।</string>
     <string name="welcome_guide_search_title">खोजें और चलाएं</string>
     <string name="welcome_guide_search_desc">कोई भी गाना, एल्बम या कलाकार खोजें, फिर प्ले दबाएं।</string>
     <string name="welcome_guide_offline_title">ऑफ़लाइन सुनें</string>

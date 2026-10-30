@@ -382,7 +382,7 @@
     <string name="welcome_guide_title">Cách dùng Spotube</string>
     <string name="welcome_guide_subtitle">Bốn bước nhanh là bạn đã có thể nghe nhạc.</string>
     <string name="welcome_guide_signin_title">Đăng nhập</string>
-    <string name="welcome_guide_signin_desc">Kết nối tài khoản Spotify hoặc chọn plugin danh mục của riêng bạn.</string>
+    <string name="welcome_guide_signin_desc">Kết nối tài khoản hoặc chọn plugin danh mục của riêng bạn.</string>
     <string name="welcome_guide_search_title">Tìm kiếm và phát</string>
     <string name="welcome_guide_search_desc">Tìm bất kỳ bài hát, album hay nghệ sĩ nào rồi nhấn phát.</string>
     <string name="welcome_guide_offline_title">Nghe ngoại tuyến</string>

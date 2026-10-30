@@ -386,7 +386,7 @@
     <string name="welcome_guide_title">نحوهٔ استفاده از Spotube</string>
     <string name="welcome_guide_subtitle">چهار گام سریع و مشغول شنیدن هستید.</string>
     <string name="welcome_guide_signin_title">ورود</string>
-    <string name="welcome_guide_signin_desc">حساب Spotify خود را متصل کنید یا افزونهٔ کاتالوگ دلخواهتان را انتخاب کنید.</string>
+    <string name="welcome_guide_signin_desc">حساب خود را متصل کنید یا افزونهٔ کاتالوگ دلخواهتان را انتخاب کنید.</string>
     <string name="welcome_guide_search_title">جستجو و پخش</string>
     <string name="welcome_guide_search_desc">هر آهنگ، آلبوم یا هنرمندی را پیدا کنید و پخش را بزنید.</string>
     <string name="welcome_guide_offline_title">گوش دادن آفلاین</string>

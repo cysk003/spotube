@@ -382,7 +382,7 @@
     <string name="welcome_guide_title">วิธีใช้ Spotube</string>
     <string name="welcome_guide_subtitle">แค่ 4 ขั้นตอนง่าย ๆ ก็เริ่มฟังได้เลย</string>
     <string name="welcome_guide_signin_title">เข้าสู่ระบบ</string>
-    <string name="welcome_guide_signin_desc">เชื่อมต่อบัญชี Spotify ของคุณ หรือเลือกปลั๊กอินแคตตาล็อกของคุณเอง</string>
+    <string name="welcome_guide_signin_desc">เชื่อมต่อบัญชีของคุณ หรือเลือกปลั๊กอินแคตตาล็อกของคุณเอง</string>
     <string name="welcome_guide_search_title">ค้นหาและเล่น</string>
     <string name="welcome_guide_search_desc">ค้นหาเพลง อัลบั้ม หรือศิลปิน แล้วกดเล่น</string>
     <string name="welcome_guide_offline_title">ฟังแบบออฟไลน์</string>

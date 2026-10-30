@@ -33,12 +33,14 @@ import org.spotube.spotube.modules.settings.JamBroker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -47,6 +49,7 @@ import kotlinx.serialization.json.Json
 import org.jetbrains.compose.resources.getString
 import spotube.composeapp.generated.resources.Res
 import spotube.composeapp.generated.resources.jam_error_broker_host_empty
+import spotube.composeapp.generated.resources.jam_error_broker_unreachable
 import spotube.composeapp.generated.resources.jam_error_connection_failed
 import spotube.composeapp.generated.resources.jam_error_connection_lost
 import spotube.composeapp.generated.resources.jam_error_no_broker
@@ -135,8 +138,15 @@ class JamRoomClient : KoinComponent {
 
             val mqtt = startClient(broker, clientId)
             client = mqtt
-            withTimeout(broker.connectionTimeoutSeconds.seconds) {
-                mqtt.awaitConnectivity()
+            try {
+                withTimeout(broker.connectionTimeoutSeconds.seconds) {
+                    // connectionState replays its current value, unlike awaitConnectivity's
+                    // broadcast flow, which loses a CONNACK that lands before it is collected.
+                    mqtt.connectionState.first { it is ConnectionState.Connected }
+                }
+            } catch (e: TimeoutCancellationException) {
+                throw IllegalStateException(
+                    getString(Res.string.jam_error_broker_unreachable, broker.host, broker.port), e)
             }
             _connectionError.value = null
             log.i { "Connected to ${broker.host}:${broker.port} room=$code as $clientId" }

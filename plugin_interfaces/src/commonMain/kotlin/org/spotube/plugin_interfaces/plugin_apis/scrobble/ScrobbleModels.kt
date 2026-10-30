@@ -28,6 +28,6 @@ data class ScrobbleTrack(
     val trackName: String,
     val artistName: String,
     val albumName: String?,
-    val streamingProvider: String, // e.g. "spotify", "apple_music" etc
+    val streamingProvider: String, // e.g. "greedy_green_corp", "apple_music" etc
     val durationMs: Long? = null,
 )

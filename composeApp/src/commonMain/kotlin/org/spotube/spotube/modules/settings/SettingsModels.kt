@@ -98,9 +98,9 @@ data class UserSettings(
 @Serializable
 data class JamBroker(
     val name: String = "",
-    val host: String = "test.mosquitto.org",
-    val port: Int = 1883,
-    val useTls: Boolean = false,
+    val host: String = "broker.hivemq.com",
+    val port: Int = 8883,
+    val useTls: Boolean = true,
     val username: String? = null,
     val password: String? = null,
     val clientIdPrefix: String = "spotube",
