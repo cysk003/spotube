@@ -2,7 +2,8 @@
   <img width="600" src="assets/branding/spotube_banner.png" alt="Spotube Logo">
 
 A cross-platform extensible open-source music streaming platform.<br>
-Bring your own music metadata/playlist/audio-source with plugins created by community or by yourself. A small step towards the decentralized music streaming era!
+Bring your own music metadata/playlist/audio-source with plugins created by community or by
+yourself. A small step towards the decentralized music streaming era!
 
 <a href="https://spotube.cc"><img alt="Visit the website" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/documentation/website_vector.svg"></a>
 <a href="https://discord.gg/uJ94vxB6vg"><img alt="Discord Server" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-plural_vector.svg"></a>
@@ -17,16 +18,15 @@ Bring your own music metadata/playlist/audio-source with plugins created by comm
 ---
 
 ![Spotube Desktop](assets/feature-graphics/readme-hero.png)
-
 ![Spotube Mobile](assets/feature-graphics/readme-mobile.png)
 
-</div>
+****</div>
 
 ## 🌃 Features
 
 - 🧩 Plugin powered, supports any platform or custom music service through plugins.
 - 🗺️ Community driven plugins for popular platforms or create your own.
-- ⬇️ Freely downloadable tracks with tagged metadata.
+- ⬇️ Freely downloadable tracks with tagged **metadata**.
 - 🖥️ 📱 Cross-platform support.
 - 🪶 Small size & less data usage.
 - 🕒 Time synced lyrics regardless of the plugin support.
@@ -41,132 +41,183 @@ Download Spotube from the Official Website: https://spotube.cc
 
 ### 🔄 Nightly Builds
 
-Grab the latest nightly builds of Spotube [from the Offical Website](https://spotube.cc/downloads/nightly).
+Grab the latest nightly builds of
+Spotube [from the Offical Website](https://spotube.cc/downloads/nightly).
 
-## 🕳️ Building from source
-
+<details>
+<summary>
+<h3 style="display: inline;">🕳️ Building from source [Click to expand]</h3>
+</summary>
+<hr/>
 <a href="https://github.com/team-spotube/spotube/actions"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/KRTirtho/spotube/spotube-release-binary.yml?+label=Build%20Status"></a>
 
-Spotube is a Kotlin Multiplatform + Compose Multiplatform app. The desktop app is built with the [Nucleus](https://nucleusframework.dev) Gradle plugin and released as a **GraalVM native image**: an ahead-of-time compiled binary that needs no JVM installed.
+Spotube is a Compose Multiplatform app.
 
-### Prerequisites
+### 1. Prerequisites
 
-- **JDK 21** to run Gradle. The Gradle daemon JDK and the GraalVM toolchain are provisioned automatically.
-- **Rust** (`rustup` + `cargo`). The `composeApp` Rust library is built through [Gobley](https://gobley.dev).
+- **JDK 21** to run Gradle (the Gradle daemon JDK and GraalVM are provisioned automatically).
+- **Rust** (`rustup` + `cargo`), for the `composeApp` library built
+  through [Gobley](https://gobley.dev).
 - **Android SDK**, only for Android builds.
-- **Unpublished dependency.** One dependency isn't on Maven Central yet. Clone it and run `./gradlew publishToMavenLocal` in it:
-  - [kdroidFilter/ComposeNativeWebview](https://github.com/kdroidFilter/ComposeNativeWebview), at the commit pinned in [`spotube-release-binary.yml`](.github/workflows/spotube-release-binary.yml) (`COMPOSE_WEBVIEW_COMMIT`)
-- **Linux runtime libraries** (needed to run the app, including `:composeApp:run`). The `.deb`/`.rpm` install these as dependencies from your distro. For a source build, install them yourself, **including VLC**. Only the `.AppImage` is self-contained (it bundles VLC, GTK 3 and WebKitGTK, and uses just the host's glibc, graphics, X11 and sound libraries):
+- **[ComposeNativeWebview](https://github.com/kdroidFilter/ComposeNativeWebview)**, which isn't on
+  Maven Central yet. Clone it at the commit pinned as `COMPOSE_WEBVIEW_COMMIT` in [
+  `spotube-release-binary.yml`](.github/workflows/spotube-release-binary.yml) and run
+  `./gradlew publishToMavenLocal` in it.
+- **Linux only: runtime libraries, including VLC.** Needed to run the app, including
+  `:composeApp:run`:
 
-  | Distro | Command |
-  |---|---|
-  | Debian/Ubuntu | `sudo apt-get install libvlc5 vlc-plugin-base libwebkit2gtk-4.1-0 libgtk-3-0 libasound2 libgl1 libxtst6 libxi6 libxrender1` |
-  | Fedora | `sudo dnf install vlc-libs webkit2gtk4.1 gtk3 alsa-lib mesa-libGL libXtst libXi libXrender`. `vlc-libs` is only in [RPM Fusion](https://rpmfusion.org/Configuration), so enable it first. |
-  | Arch / CachyOS / Manjaro | `sudo pacman -S vlc webkit2gtk-4.1 gtk3 alsa-lib libglvnd libxtst libxi libxrender` |
-  | openSUSE | `sudo zypper install libvlc5 libwebkit2gtk-4_1-0 libgtk-3-0 libasound2 Mesa-libGL1 libXtst6 libXi6 libXrender1` (for wide codec support, switch to the [Packman](https://en.opensuse.org/Additional_package_repositories#Packman) repo's VLC) |
+  | Distro                   | Command                                                                                                                                                          |
+  | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | Debian/Ubuntu            | `sudo apt-get install libvlc5 vlc-plugin-base libwebkit2gtk-4.1-0 libgtk-3-0 libasound2 libgl1 libxtst6 libxi6 libxrender1`                                      |
+  | Fedora                   | `sudo dnf install vlc-libs webkit2gtk4.1 gtk3 alsa-lib mesa-libGL libXtst libXi libXrender` (`vlc-libs` needs [RPM Fusion](https://rpmfusion.org/Configuration)) |
+  | Arch / CachyOS / Manjaro | `sudo pacman -S vlc webkit2gtk-4.1 gtk3 alsa-lib libglvnd libxtst libxi libxrender`                                                                              |
+  | openSUSE                 | `sudo zypper install libvlc5 libwebkit2gtk-4_1-0 libgtk-3-0 libasound2 Mesa-libGL1 libXtst6 libXi6 libXrender1`                                                  |
 
-  Arch-based distros and openSUSE have no native package here. Use the `.AppImage`. The `.rpm` is built with Fedora package names, so it won't resolve on openSUSE.
+  On Ubuntu 24.04+/Debian 13, `libgtk-3-0` and `libasound2` are `libgtk-3-0t64` and `libasound2t64`;
+  apt resolves this itself.
 
-  On Ubuntu 24.04+/Debian 13 `libgtk-3-0` and `libasound2` are named `libgtk-3-0t64` and `libasound2t64`; apt resolves this automatically.
+### 2. Run in development
 
-Always use the Gradle wrapper (`./gradlew`, or `gradlew.bat` on Windows).
-
-### Development
-
+Desktop (JVM), fastest edit/run loop
 ```bash
-./gradlew :composeApp:run                    # desktop (JVM), fastest edit/run loop
-./gradlew :composeApp:assembleStableDebug    # Android debug APK (or assembleNightlyDebug)
+./gradlew :composeApp:run
 ```
 
-Development builds stay fast. The release-only optimizations (the Rust release profile with LTO and symbol stripping, the native image, native-library pruning) are only applied when you build something to ship. See [Production vs development builds](#production-vs-development-builds).
+Android debug APK
+```bash
+./gradlew :composeApp:assembleStableDebug
+```
+> Use `./gradlew :composeApp:assembleNightlyDebug` for the nightly channel.
 
-### Building the desktop app (GraalVM native image)
+Development builds stay fast: the release-only optimizations below are skipped.
 
-#### Native toolchain
+### 3. Build the desktop app
 
-[Nucleus downloads and caches GraalVM CE](https://nucleusframework.dev/en/docs/performance/graalvm/) under `~/.gradle/nucleus/graalvm` on the first native build. Set `GRAALVM_HOME` to use your own GraalVM instead. Each OS also needs a native C toolchain:
+A native build takes **about 10 minutes**, uses **every CPU core** and peaks at **~15 GB of RAM**.
+It only happens for the tasks below, never for `run`.
 
-| OS | Requirements |
-|---|---|
-| Linux | `gcc`, `zlib` headers, `patchelf`; plus `rpm` for `.rpm` packages, `fuse` for `.AppImage`, and, for the AppImage's bundled libraries, `zstd` (plus `ar`/`tar` and `readelf`, from binutils). Debian/Ubuntu: `sudo apt-get install build-essential zlib1g-dev patchelf rpm fuse zstd`. Fedora: `sudo dnf install gcc zlib-devel patchelf rpm-build fuse zstd` (also install the [Linux runtime libraries](#prerequisites) to run what you build) |
-| macOS | Xcode Command Line Tools (`xcode-select --install`) |
-| Windows | Visual Studio Build Tools with the "Desktop development with C++" workload. Build from an "x64 Native Tools" prompt if `native-image` can't find MSVC. |
+**Native toolchain** (Nucleus downloads GraalVM CE on the first build; set `GRAALVM_HOME` to use
+your own):
 
-A native build is a whole-program compile. It takes **about 10 minutes**, uses **every CPU core**, and peaks at roughly **15 GB of RAM** (it gets slower, not broken, with less). That only happens for the native tasks below, never for `run`.
+| OS      | Requirements                                                                                                                                                                                                                                                    |
+| ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Linux   | `gcc`, `zlib` headers, `patchelf`; `rpm` for `.rpm`, `fuse` + `zstd` for `.AppImage`. <br/>Debian/Ubuntu: `sudo apt-get install build-essential zlib1g-dev patchelf rpm fuse zstd`. <br/>Fedora: `sudo dnf install gcc zlib-devel patchelf rpm-build fuse zstd` |
+| macOS   | Xcode Command Line Tools (`xcode-select --install`)                                                                                                                                                                                                             |
+| Windows | Visual Studio Build Tools with "Desktop development with C++" (use an "x64 Native Tools" prompt if `native-image` can't find MSVC)                                                                                                                              |
 
-#### Build and run
+**Build and run the app folder:**
 
 ```bash
-# App folder: binary + its native libs, in composeApp/build/compose/binaries/main/graalvm-app/
 ./gradlew :composeApp:createGraalvmNativeDistributable
+```
+> Output folder: composeApp/build/compose/binaries/main/graalvm-app/
 
-# Run that folder's binary directly
-./composeApp/build/compose/binaries/main/graalvm-app/org.spotube.spotube/spotube
-
-# Or build and launch in one step
+Build and launch in one step
+```bash
 ./gradlew :composeApp:runGraalvmNativeDistributable
 ```
 
-Keep the `spotube` binary next to the `.so`/`.dll`/`lib/` files it was built with; it loads them from its own folder.
+Keep the `spotube` binary next to the libraries it was built with; it loads them from its own
+folder.
 
-#### Installers
+**Installers** (each OS builds only its own):
 
-Each OS can only build its own installers:
+| OS               | Command                                                                 |
+| ---------------- | ----------------------------------------------------------------------- |
+| Linux            | `./gradlew :composeApp:packageGraalvmDeb :composeApp:packageGraalvmRpm` |
+| Linux (AppImage) | `./gradlew :composeApp:packageGraalvmAppImage -PappImage=true`          |
+| Windows          | `./gradlew :composeApp:packageGraalvmExe` (or `packageGraalvmMsi`)      |
+| macOS            | `./gradlew :composeApp:packageGraalvmDmg`                               |
+> Output folder: `composeApp/build/compose/binaries/main/graalvm-<format>`
 
-| OS | Command | Output |
-|---|---|---|
-| Linux | `./gradlew :composeApp:packageGraalvmDeb :composeApp:packageGraalvmRpm`, then `./gradlew :composeApp:packageGraalvmAppImage -PappImage=true` | `composeApp/build/compose/binaries/main/graalvm-{deb,rpm,appimage}/` |
-| Windows | `./gradlew :composeApp:packageGraalvmExe` (or `packageGraalvmMsi`) | `composeApp/build/compose/binaries/main/graalvm-exe/` |
-| macOS | `./gradlew :composeApp:packageGraalvmDmg` | `composeApp/build/compose/binaries/main/graalvm-dmg/` |
+> [!Tip]
+> Add `-Pnightly=true` for the nightly channel (separate icons and name).
 
-Add `-Pnightly=true` for the nightly channel (separate icons and name).
+<details>
+<summary>How the Linux AppImage bundle works</summary>
 
-The `.deb` and `.rpm` use your distro's shared libraries and declare them as dependencies, so the package manager installs them (on Fedora, `vlc-libs` needs RPM Fusion enabled). The `.AppImage` is the self-contained one: it bundles VLC, GTK 3 and WebKitGTK (see [What the AppImage bundles](#what-the-appimage-bundles)).
+- [`DownloadLinuxGtkBundleTask`](buildSrc/src/main/kotlin/org/spotube/gradle/DownloadLinuxGtkBundleTask.kt)
+  downloads the Ubuntu 24.04 packages (audio-only VLC via
+  [vlcj-bundler](https://github.com/team-spotube/vlcj-bundler-gradle-plugin), GTK 3, WebKitGTK 4.1,
+  glib-networking), keeps only what GTK/WebKit reach and relocates the libraries with `patchelf`.
+  Needs `ar`, `tar`, `zstd`, `readelf`, `patchelf`.
+- WebKitGTK has its helper-process path compiled in, so
+  [`AppImageEnvironment`](composeApp/src/jvmMain/kotlin/org/spotube/spotube/core/appimage/AppImageEnvironment.kt)
+  patches it to a relative path and moves to that directory at startup. It also sets
+  `GIO_EXTRA_MODULES` and `WEBKIT_DISABLE_DMABUF_RENDERER=1` (the bundled WebKitGTK 2.44 never
+  paints against a newer host Mesa).
+- `main()` must call `GraalVmInitializer.initialize()` first: the VLC loader and the environment
+  setup read `compose.application.resources.dir`.
 
-#### What the AppImage bundles
+</details>
 
-Build it with `./gradlew :composeApp:packageGraalvmAppImage -PappImage=true`. Without `-PappImage=true` nothing is bundled and the app uses the system libraries, which is what the `.deb`/`.rpm` and `:composeApp:run` do.
+### 4. Native build breaks, JVM works
 
-The bundle follows the [AppImage exclude list](https://github.com/AppImageCommunity/pkg2appimage/blob/master/excludelist) and what Tauri apps ship. It carries VLC (audio-only, from the [vlcj-bundler](https://github.com/team-spotube/vlcj-bundler-gradle-plugin) plugin's `bundleVlc` option), GTK 3, WebKitGTK 4.1, GLib/GIO, pango/cairo and their dependencies, plus glib-networking for HTTPS in the webview. It leaves the host's glibc, `libstdc++`, `libz`, GL/EGL/DRM, X11/xcb, ALSA, fontconfig/freetype/harfbuzz and the Wayland libraries alone, so the host's graphics, display and sound stack is used. Everything is taken from the Ubuntu 24.04 archive, so the AppImage needs glibc 2.38 or newer.
+A native image is a closed world: everything reached through reflection, JNI or JNA (vlcj, Zipline,
+NewPipe, ktor, datastore, ...) must be declared at build time. Nucleus generates most of it; the
+rest lives in [`composeApp/graalvm/reachability-metadata.json`](composeApp/graalvm/reachability-metadata.json).
 
-How it works, in short:
-- [`DownloadLinuxGtkBundleTask`](buildSrc/src/main/kotlin/org/spotube/gradle/DownloadLinuxGtkBundleTask.kt) downloads the packages, keeps the libraries reachable from GTK/WebKit and relocates them with `patchelf`. Needs `ar`, `tar`, `zstd`, `readelf` and `patchelf`.
-- WebKitGTK has its helper-process path compiled in, so the library is patched to look relative to the working directory, and at startup the app moves there ([`AppImageEnvironment`](composeApp/src/jvmMain/kotlin/org/spotube/spotube/core/appimage/AppImageEnvironment.kt)). It also points `GIO_EXTRA_MODULES` at the bundled TLS module and sets `WEBKIT_DISABLE_DMABUF_RENDERER=1`, because the bundled WebKitGTK 2.44's dmabuf renderer never paints (or aborts) against a newer host Mesa/compositor. The display backend is left alone: forcing X11 doesn't help, since the webview doesn't paint on XWayland either.
-- Startup order matters: `main()` calls `GraalVmInitializer.initialize()` first, since the VLC loader and the environment setup read `compose.application.resources.dir`.
+Symptoms: `ClassNotFoundException`, `NoSuchMethodException` or `MissingReflectionRegistrationError`
+in the native binary, while `:composeApp:run` works.
 
-#### Reflection metadata (when a feature breaks only in the native build)
+1. `./gradlew :composeApp:runWithNativeAgent` starts the app on the JVM with GraalVM's tracing agent.
+2. Use the broken feature, then **close the window normally**. Ctrl+C discards the recording.
+3. Commit the updated JSON in `composeApp/graalvm/` and rebuild.
 
-A native image is a closed world: anything the app reaches through reflection, JNI or JNA (vlcj, the Zipline/QuickJS plugin engine, NewPipe, ktor, datastore, …) must be declared at build time. Nucleus generates most of this automatically. The rest is in [`composeApp/graalvm/reachability-metadata.json`](composeApp/graalvm/reachability-metadata.json).
+> [!Tip]
+> `./gradlew :composeApp:runGraalvmNative` is a faster debug loop: a quick `-Ob` build that names the
+> missing registration.
 
-If something works in `:composeApp:run` but throws `ClassNotFoundException`, `NoSuchMethodException`, `MissingReflectionRegistrationError` or similar in the native binary, record what's missing:
+> [!Warning]
+> Keep the hand-written `uk.co.caprica.vlcj.binding.lib.LibVlc` entry, or playback fails to initialize.
 
-```bash
-./gradlew :composeApp:runWithNativeAgent
-```
+### 5. Production vs development builds
 
-The app starts on the JVM with GraalVM's tracing agent attached. Use the broken feature (and anything near it), then **close the window normally**: the recorded entries are merged into `composeApp/graalvm/` only on a clean exit, not with Ctrl+C. Commit the updated JSON and rebuild the native image.
+Production mode turns on automatically for `package*`, `create*`, `notarize*` and
+`nativeImageCompile` tasks. Force it with `-Pproduction=true|false`.
 
-`./gradlew :composeApp:runGraalvmNative` gives a faster debugging loop: a quick-build (`-Ob`) native image that reports exactly which registration is missing.
+| Area        | Development            | Production                                                                                                               |
+| ----------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Rust lib    | fast `debug` profile   | `release` with LTO and stripping (31 MB → 1.8 MB)                                                                        |
+| Desktop app | hot-reloadable JVM app | size-optimized (`-Os`) GraalVM native image                                                                              |
+| Native libs | all                    | host OS/CPU only; Skia loaded from `lib/`; on Linux ~10 KB `libjvm.so`/`libjava.so` shims instead of the JDK's 28 MB one |
 
-Keep the hand-written `uk.co.caprica.vlcj.binding.lib.LibVlc` entry. JNA's direct mapping looks up its `native` methods through reflection, and without the entry, playback fails to initialize.
+Android picks the Rust profile from its build type.
 
-### Production vs development builds
+### 6. Releases
 
-Production mode is switched on automatically when you ask Gradle for a shippable artifact: any `package*`, `create*`, `notarize*` or `nativeImageCompile` task. You can force it either way with `-Pproduction=true` or `-Pproduction=false`.
+Run [`spotube-release-binary.yml`](.github/workflows/spotube-release-binary.yml) manually
+(`workflow_dispatch`) as `stable`, `beta` or `nightly`.
 
-| | Development (`run`, debug builds) | Production (installers, native image) |
-|---|---|---|
-| Rust library (desktop) | `debug` profile, fast incremental compile | `release` profile with LTO, single codegen unit, stripped (31 MB → 1.8 MB) |
-| Desktop app | JVM, hot-reloadable | GraalVM native image, `-Os` (size-optimized) |
-| Native libraries | everything on the classpath | only the host OS/CPU's natives; other OSes' and CPUs' libraries are pruned from the uber JAR the image is compiled from |
-| Skia (Skiko) | extracted from the JAR | loaded from `lib/` next to the binary, not embedded a second time |
-| JDK runtime libs (Linux) | n/a | native-image's ~10 KB `libjvm.so`/`libjava.so` shims instead of the JDK's (28 MB `libjvm.so`) |
+- **Beta:** the stable build as a draft, tagged `v<version>-beta.N`. Set `betaNumber` in
+  `composeApp/build.gradle.kts` to N, and back to `null` for stable.
+- **Desktop:** each platform (Linux x86_64 and aarch64, Windows, macOS) builds its installers on its
+  own runner.
+- **Android:** a signed APK.
 
-Android picks the Rust profile from its build type (`debug` or `release`) on its own.
+</details>
+<hr/>
 
-### Releases
+## 📚 Resources
 
-Releases are built by [`spotube-release-binary.yml`](.github/workflows/spotube-release-binary.yml), run manually (`workflow_dispatch`) as `stable`, `beta` or `nightly`. A beta is the stable build released like a stable release (draft, not a pre-release), tagged `v<version>-beta.N` (set `betaNumber` in `composeApp/build.gradle.kts` to N, and back to `null` for stable). Each desktop platform (Linux x86_64 and aarch64, Windows, macOS) builds its native installers on its own runner. Android builds a signed APK.
+**Core stack**
+- [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html)
+- [Compose Multiplatform](https://www.jetbrains.com/compose-multiplatform/)
+- [Compose Hot Reload](https://github.com/JetBrains/compose-hot-reload)
+- [Koin for KMP](https://insert-koin.io/docs/reference/koin-mp/kmp)
+- [Ktor client](https://ktor.io/docs/client-create-multiplatform-application.html)
+- [DataStore for KMP](https://developer.android.com/kotlin/multiplatform/datastore)
+
+**Desktop and native**
+- [Nucleus](https://github.com/kdroidFilter/Nucleus): desktop packaging and GraalVM integration
+- [ComposeNativeWebview](https://github.com/kdroidFilter/ComposeNativeWebview)
+- [GraalVM Native Image](https://www.graalvm.org/latest/reference-manual/native-image/) and its
+  [reachability metadata](https://www.graalvm.org/latest/reference-manual/native-image/metadata/)
+- [Gobley](https://gobley.dev): Rust in Kotlin Multiplatform
+- [vlcj](https://github.com/caprica/vlcj): VLC bindings for audio playback
+
+**Plugins**
+- [Zipline](https://github.com/cashapp/zipline): runs the JS plugins
 
 ## 👥 The Spotube team
 
