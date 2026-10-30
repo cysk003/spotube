@@ -553,6 +553,7 @@
     <string name="jam_error_broker_host_empty">Broker host is empty</string>
     <string name="jam_error_connection_failed">Connection failed</string>
     <string name="jam_error_connection_lost">Connection lost</string>
+    <string name="jam_error_broker_unreachable">Couldn't reach %1$s:%2$d. Check your network or pick another broker in Settings → Jam.</string>
 
     <!-- Settings: Group Jam broker -->
     <string name="settings_jam_broker_content_description">Broker</string>
