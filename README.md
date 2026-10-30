@@ -16,9 +16,9 @@ Bring your own music metadata/playlist/audio-source with plugins created by comm
 
 ---
 
-![Spotube Desktop](assets/branding/spotube-screenshot.png)
+![Spotube Desktop](assets/feature-graphics/readme-hero.png)
 
-![Spotube Mobile](assets/branding/mobile-screenshots/combined.jpg)
+![Spotube Mobile](assets/feature-graphics/readme-mobile.png)
 
 </div>
 
